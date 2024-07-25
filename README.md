@@ -2,7 +2,7 @@
 ## Tutorial 1 - Using Classification Type Machine Learning to Differentiate Cancerous and Not Cancerous From Eachother
 ### Learning Objectives
 
-  * Understand various commonly used machine learning models and algorithms and how they are utilized
+  * Understand various commonly used machine learning classification methods and algorithms and how they are utilized
   * Using a known set of cancerous and not cancerous molecules to train a given unknown set
     
 ### Background
@@ -181,5 +181,7 @@ clf_lg = LogisticRegression(random_state=0).fit(X_train_up, y_train_up)
 clf.predict(X_test)
 
 ```
+### Conclusion
 
+Knowing whether or not molecules are cancerous is very important in many different scientific studies and research. Using machine learning and many of its different classification methods, we are able to compare the structures of a known set of molecules (training set) to a set of molecules that we dont know if cancerous or not yet in order to determine whether it is or not.
 
