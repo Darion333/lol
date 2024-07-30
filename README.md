@@ -64,6 +64,7 @@ plt.rcParams['mathtext.fontset']='stix'
 ```
 * These code blocks are setting up the basics of what is needed for the model, importing necessary programming libraries and defining parameters for data tables
 
+
 ### Pre-processing the data set
 
 ```python
@@ -75,6 +76,7 @@ df_test = pd.read_csv(filein_test, sep=" ",  header=None, names=['molecule', 'ca
 df_train = pd.read_csv(filein_train, sep=" ",  header=None, names=['molecule', 'cancerous'])
 ```
 * This code block processes the data (different cancerous and uncancerous molecules) listed in a specified data folder
+  
 ```python
 df_test
 ```
@@ -83,6 +85,7 @@ df_test
 ![image](https://github.com/user-attachments/assets/29aa6c34-9130-4316-925d-41c21857218b)
 
 * This data is from the test set, in which the code will use as a reference while training the other unknown data
+
   
 ```python
 df_train
@@ -92,6 +95,7 @@ df_train
 ![image](https://github.com/user-attachments/assets/93b00e86-d1e6-421a-a88f-1a746b70c2b1)
 
 * This data is from the train set, in which the code will change and train using the test data as a reference
+
 
 
 ```python
@@ -125,6 +129,7 @@ mydict['atoms']
 
   ![image](https://github.com/user-attachments/assets/72262dff-79f7-4cf7-9e8b-e34d205a03d0)
 
+
    
 ```python
 getSMILES(df_train)
@@ -133,6 +138,7 @@ getSMILES(df_train)
 
 ![image](https://github.com/user-attachments/assets/aed90f93-e0a1-4612-bd4c-31a5b5a64207)
 
+
 ```python
 df_train
 ```
@@ -140,12 +146,14 @@ df_train
 
 ![image](https://github.com/user-attachments/assets/859fbd5a-4213-4a36-b408-f9e1f9cf1eae)
 
+
 ```python
 getSMILES(df_test)
 ```
 * This function converts all the molecules in the testing set into SMILES strings
 
   ![image](https://github.com/user-attachments/assets/7b1c33da-e344-49c4-87d3-cfe487565905)
+
 
 ```python
 df_test
@@ -163,6 +171,8 @@ fp = fpgen.GetFingerprintAsNumPy(mol)
 for i in fp:
     print(i)
 ```
+* This code block utilizes AllChem's Morgan Fingerprint generator to take the structural data processed from the SMILES strings, and denote it as an array of integers
+
 
 ```python
 def getData(df):
@@ -187,26 +197,57 @@ X_test,y_test = getData(df_test)
 
 print(X_test)
 ```
+* This code block converts the SMILES strings from the test set into an array denoting its Morgan Fingerprint, and also converts its cancerous or uncancerous labels into a binary format
+* The output can be seen below:
+
+![image](https://github.com/user-attachments/assets/bc2ac740-4d0f-493f-9670-3843c31b956d)
+
+
+
 ```python
 X_train,y_train = getData(df_train)
 ```
 
+
+### Train a SVM and get the ROC curve
 ```python
 from sklearn import svm
 clf = svm.SVC(kernel='rbf')
 clf.fit(X_train, y_train)
 ```
+* This code block imports the SVM module from scikit-learn which is then used to train the SVM classifier using the training data X_train and y_train
+
 ```python
 clf.predict(X_test)
 ```
+* This function uses the SVM to predict the cancerous labels of the Molecules in X test
+
+![image](https://github.com/user-attachments/assets/db7c4102-c3d6-4811-841f-ea25ab4ec0c9)
+
+
 ```python
 y_test
 ```
+* y_test is the actual set of cancerous labels that apply to the molecules in the test set
+
+![image](https://github.com/user-attachments/assets/6cb39244-23af-4bee-9981-791c8ae58bc4)
+
+* A comparison between the predicted labels and the actual labels shows that the SVM isnt quite fully accurate
+
+
 ```python
 from sklearn.metrics import RocCurveDisplay
 svc_disp = RocCurveDisplay.from_estimator(clf, X_test, y_test)
 plt.show()
 ```
+* This code block will plot the ROC (Receiver operating characteristic) Curve of the previously trained classifier, which is a graphical representation of the classifiers accuracy and performance
+
+![image](https://github.com/user-attachments/assets/293d25ac-d197-41a3-baac-b8525f6d518b)
+
+* The positive rate and false positive rate are plotted along the two different axes, the area under the curve denoting its accuracy
+
+
+### Train a random forest and get the ROC curve
 ```python
 from sklearn.ensemble import RandomForestClassifier
 rfc = RandomForestClassifier(n_estimators=10, random_state=42)
@@ -216,16 +257,29 @@ rfc_disp = RocCurveDisplay.from_estimator(rfc, X_test, y_test, ax=ax, alpha=0.8)
 svc_disp.plot(ax=ax, alpha=0.8)
 plt.show()
 ```
+![image](https://github.com/user-attachments/assets/6c055a1f-71e2-419e-8ac9-922d0caa1d40)
+
+
 ```python
 from sklearn.linear_model import LogisticRegression
 
 clf_lg = LogisticRegression(random_state=0).fit(X_train, y_train)
 clf.predict(X_test)
 ```
+*
+![image](https://github.com/user-attachments/assets/931d63f2-cb75-4c26-89a1-743e01f01aef)
+
+
+
 ```python
 y_test
 ```
+*
+![image](https://github.com/user-attachments/assets/3a89a637-4c25-4c9e-98fe-565e0b0760d1)
 
+
+
+### Upsampling
 ```python
 from sklearn.utils import resample,shuffle
 df_0 = df_train[df_train['cancerous'] == -1]
@@ -233,16 +287,23 @@ df_1 = df_train[df_train['cancerous'] == 1]
 
 len(df_0), len(df_1)
 ```
+![image](https://github.com/user-attachments/assets/177b530f-6adf-467a-a635-9f07d6907c9e)
+
 
 ```python
 df_0_upsampled = resample(df_0,random_state=42,n_samples=50,replace=True)
 
 len(df_0_upsampled)
 ```
+![image](https://github.com/user-attachments/assets/958a4f8c-61f4-4e2f-bdee-48bc35bf04d6)
+
 
 ```python
 df_0_upsampled
 ```
+![image](https://github.com/user-attachments/assets/1ff23392-638a-47a1-a0f3-b22b6d5dcf81)
+![image](https://github.com/user-attachments/assets/2cd41a27-0901-4c77-be3e-98b33127db9d)
+![image](https://github.com/user-attachments/assets/65bb7e04-330c-4d88-bdb9-e2260ab3fab1)
 
 ```python
 df_upsampled = pd.concat([df_0_upsampled,df_1])
@@ -252,6 +313,7 @@ X_train_up,y_train_up = getData(df_upsampled)
 clf_lg = LogisticRegression(random_state=0).fit(X_train_up, y_train_up)
 clf.predict(X_test)
 ```
+![image](https://github.com/user-attachments/assets/29a39f13-e559-4e19-89d3-352e290deffe)
 
 ### Conclusion
 
