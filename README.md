@@ -2,8 +2,7 @@
 ## Tutorial 1 - Using Classification Type Machine Learning to Differentiate Cancerous and Not Cancerous From Eachother
 ### Learning Objectives
 
-  * Understand various commonly used machine learning classification methods and algorithms and how they are utilized
-  * Using a known set of cancerous and not cancerous molecules to train a given unknown set
+  * Use Scikit-learn to do simple classification tasks
     
 ### Background
 
@@ -15,6 +14,7 @@ This code will use outside external models such as PubChemPy and Rdkit in order 
 
 ## Code:
 
+### Set up
 ```python
 import os    
 import tempfile
@@ -62,6 +62,9 @@ plt.rcParams.update({
 })
 plt.rcParams['mathtext.fontset']='stix'
 ```
+* These code blocks are setting up the basics of what is needed for the model, importing necessary programming libraries and defining parameters for data tables
+
+### Pre-processing the data set
 
 ```python
 datapath = 'PAH/' # path to your data folder
@@ -71,12 +74,21 @@ filein_train= os.path.join(datapath,'trainset_0.ds')
 df_test = pd.read_csv(filein_test, sep=" ",  header=None, names=['molecule', 'cancerous'])
 df_train = pd.read_csv(filein_train, sep=" ",  header=None, names=['molecule', 'cancerous'])
 ```
+* This code block processes the data (different cancerous and uncancerous molecules) listed in a specified data folder
 ```python
 df_test
 ```
+* This code block runs the function "df_test", outputting the data from a folder into a table with parameters defined by the previous code blocks, as seen below:
+![image](https://github.com/user-attachments/assets/29aa6c34-9130-4316-925d-41c21857218b)
+* This data is from the test set, in which the code will use as a reference while training the other unknown data
+  
 ```python
 df_train
 ```
+* This code block runs the function "df_train", outputting the data from a folder into a table with parameters defined by the previous code blocks, as seen below:
+![image](https://github.com/user-attachments/assets/93b00e86-d1e6-421a-a88f-1a746b70c2b1)
+* This data is from the train set, in which the code will change and train using the test data as a reference
+
 
 ```python
 def getSMILES(df):
@@ -103,7 +115,8 @@ mydict=mymol.to_dict(properties=['atoms'])
 
 mydict['atoms']
 ```
-
+* This code block uses the external library PubChemPy, which is a way to utilize the world's largest collection of freely accessible chemical information, PubChem
+   
 ```python
 getSMILES(df_train)
 ```
