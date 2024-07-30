@@ -14,6 +14,7 @@ Using a fundamental concept of chemistry, that similarly structured molecules wi
 This code will use outside external models such as PubChemPy and Rdkit in order to first store the molecule name as a SMILES (Simplified molecular-input line-entry system) string which will then be converted into array (Morgan fingerprint), a process that is vital since we are unable to only use the name of the molecule stored as a string in the code.
 
 ### Code:
+![image](https://github.com/user-attachments/assets/617b81ef-61af-4112-80c0-dcdd382c5d77)
 
 ```python
 import os    
