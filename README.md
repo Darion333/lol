@@ -13,8 +13,7 @@ Using a fundamental concept of chemistry, that similarly structured molecules wi
 
 This code will use outside external models such as PubChemPy and Rdkit in order to first store the molecule name as a SMILES (Simplified molecular-input line-entry system) string which will then be converted into array (Morgan fingerprint), a process that is vital since we are unable to only use the name of the molecule stored as a string in the code.
 
-### Code:
-![image](https://github.com/user-attachments/assets/617b81ef-61af-4112-80c0-dcdd382c5d77)
+## Code:
 
 ```python
 import os    
@@ -42,7 +41,9 @@ from hyperopt import hp, tpe, fmin, Trials
 from rdkit.Chem import AllChem
 import pubchempy as pcp
 from rdkit import Chem
+```
 
+```python
 fs = 10 # font size
 fs_label = 10 # tick label size
 fs_lgd = 10 # legend font size
@@ -60,18 +61,24 @@ plt.rcParams.update({
     'pdf.fonttype':'truetype'
 })
 plt.rcParams['mathtext.fontset']='stix'
+```
 
+```python
 datapath = 'PAH/' # path to your data folder
 filein_test= os.path.join(datapath,'testset_0.ds') # read in the CSV file containing the features. This file is just for example
 filein_train= os.path.join(datapath,'trainset_0.ds')
 # The dataframe for molecule name and classis
 df_test = pd.read_csv(filein_test, sep=" ",  header=None, names=['molecule', 'cancerous'])
 df_train = pd.read_csv(filein_train, sep=" ",  header=None, names=['molecule', 'cancerous'])
-
+```
+```python
 df_test
-
+```
+```python
 df_train
+```
 
+```python
 def getSMILES(df):
     mols=df['molecule'].values
     smiles_list = []
@@ -95,22 +102,31 @@ mymol = pcp.get_compounds('naphthalene', 'name', record_type='3d')[0]
 mydict=mymol.to_dict(properties=['atoms'])
 
 mydict['atoms']
+```
 
+```python
 getSMILES(df_train)
-
+```
+```python
 df_train
-
+```
+```python
 getSMILES(df_test)
-
+```
+```python
 df_test
+```
 
+```python
 fpgen = AllChem.GetMorganGenerator(radius=2)
 mol = Chem.MolFromSmiles("Cn1cnc2c1c(=O)n(C)c(=O)n2C")
 fp = fpgen.GetFingerprintAsNumPy(mol)
 
 for i in fp:
     print(i)
+```
 
+```python
 def getData(df):
     fpgen = AllChem.GetMorganGenerator(radius=2)
     MFP_list = []
@@ -132,21 +148,28 @@ def getData(df):
 X_test,y_test = getData(df_test)
 
 print(X_test)
-
+```
+```python
 X_train,y_train = getData(df_train)
+```
 
+```python
 from sklearn import svm
 clf = svm.SVC(kernel='rbf')
 clf.fit(X_train, y_train)
-
+```
+```python
 clf.predict(X_test)
-
+```
+```python
 y_test
-
+```
+```python
 from sklearn.metrics import RocCurveDisplay
 svc_disp = RocCurveDisplay.from_estimator(clf, X_test, y_test)
 plt.show()
-
+```
+```python
 from sklearn.ensemble import RandomForestClassifier
 rfc = RandomForestClassifier(n_estimators=10, random_state=42)
 rfc.fit(X_train, y_train)
@@ -154,34 +177,44 @@ ax = plt.gca()
 rfc_disp = RocCurveDisplay.from_estimator(rfc, X_test, y_test, ax=ax, alpha=0.8)
 svc_disp.plot(ax=ax, alpha=0.8)
 plt.show()
-
+```
+```python
 from sklearn.linear_model import LogisticRegression
 
 clf_lg = LogisticRegression(random_state=0).fit(X_train, y_train)
 clf.predict(X_test)
-
+```
+```python
 y_test
+```
 
+```python
 from sklearn.utils import resample,shuffle
 df_0 = df_train[df_train['cancerous'] == -1]
 df_1 = df_train[df_train['cancerous'] == 1]
 
 len(df_0), len(df_1)
+```
 
+```python
 df_0_upsampled = resample(df_0,random_state=42,n_samples=50,replace=True)
 
 len(df_0_upsampled)
+```
 
+```python
 df_0_upsampled
+```
 
+```python
 df_upsampled = pd.concat([df_0_upsampled,df_1])
 
 X_train_up,y_train_up = getData(df_upsampled)
 
 clf_lg = LogisticRegression(random_state=0).fit(X_train_up, y_train_up)
 clf.predict(X_test)
-
 ```
+
 ### Conclusion
 
 Knowing whether or not molecules are cancerous is very important in many different scientific studies and research. Using machine learning and many of its different classification methods, we are able to compare the structures of a known set of molecules (training set) to a set of molecules that we dont know if cancerous or not yet in order to determine whether it is or not.
