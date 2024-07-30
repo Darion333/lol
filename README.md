@@ -79,14 +79,18 @@ df_train = pd.read_csv(filein_train, sep=" ",  header=None, names=['molecule', '
 df_test
 ```
 * This code block runs the function "df_test", outputting the data from a folder into a table with parameters defined by the previous code blocks, as seen below:
+  
 ![image](https://github.com/user-attachments/assets/29aa6c34-9130-4316-925d-41c21857218b)
+
 * This data is from the test set, in which the code will use as a reference while training the other unknown data
   
 ```python
 df_train
 ```
 * This code block runs the function "df_train", outputting the data from a folder into a table with parameters defined by the previous code blocks, as seen below:
+
 ![image](https://github.com/user-attachments/assets/93b00e86-d1e6-421a-a88f-1a746b70c2b1)
+
 * This data is from the train set, in which the code will change and train using the test data as a reference
 
 
@@ -116,19 +120,40 @@ mydict=mymol.to_dict(properties=['atoms'])
 mydict['atoms']
 ```
 * This code block uses the external library PubChemPy, which is a way to utilize the world's largest collection of freely accessible chemical information, PubChem
+* The name of each molecule will be found in the PubChem database, and then a SMILES string will be formed based on its molecular structure.
+* The data is turned into a dictionary using the "to_dict" function, resulting in an output of the molecule (in this case napthalene) as a list of its elements and their positions, a partial representation seen below:
+
+  ![image](https://github.com/user-attachments/assets/72262dff-79f7-4cf7-9e8b-e34d205a03d0)
+
    
 ```python
 getSMILES(df_train)
 ```
+* This function converts all the molecules in the training set into SMILES strings
+
+![image](https://github.com/user-attachments/assets/aed90f93-e0a1-4612-bd4c-31a5b5a64207)
+
 ```python
 df_train
 ```
+* This function outputs the training set data table with a new column for the molecules denoted as SMILES strings
+
+![image](https://github.com/user-attachments/assets/859fbd5a-4213-4a36-b408-f9e1f9cf1eae)
+
 ```python
 getSMILES(df_test)
 ```
+* This function converts all the molecules in the testing set into SMILES strings
+
+  ![image](https://github.com/user-attachments/assets/7b1c33da-e344-49c4-87d3-cfe487565905)
+
 ```python
 df_test
 ```
+* This function outputs the testing set data table with a new column for the molecules denoted as SMILES strings
+
+  ![image](https://github.com/user-attachments/assets/af516147-6d01-4799-834e-6c68bc4e25f7)
+
 
 ```python
 fpgen = AllChem.GetMorganGenerator(radius=2)
