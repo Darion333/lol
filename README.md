@@ -6,11 +6,12 @@
     
 ### Background
 
-Identifying whether or not molecules are cancerous is a very important task since many of them are used in various scientific studies and research. PAH molecules, or Polycyclic aromatic hydrocarbons are molecules that are made up of multiple carbon rings. While many PAH molecules are cancerous, others are not, highlighting the importance of knowing which molecules are which when used in research or experiments. 
 
-Using a fundamental concept of chemistry, that similarly structured molecules will have similar properties, we can create a machine learning model that will compare the strucutures of given PAH molecules with other already classified molecules in order to determine which are cancerous.
+Identifying cancerous molecules is crucial for scientific research, especially when these molecules are used in various studies. Polycyclic aromatic hydrocarbons (PAHs) are molecules formed by multiple carbon rings. While some PAH molecules are carcinogenic, others are not, underscoring the necessity of distinguishing between them in research settings.
 
-This code will use outside external models such as PubChemPy and Rdkit in order to first store the molecule name as a SMILES (Simplified molecular-input line-entry system) string which will then be converted into array (Morgan fingerprint), a process that is vital since we are unable to only use the name of the molecule stored as a string in the code.
+Leveraging a fundamental principle in chemistry—where molecules of similar structures exhibit similar properties—we can develop a machine learning model to classify PAH molecules. This model will compare the structures of unknown PAHs with those of molecules that have already been classified, predicting their carcinogenic potential.
+
+We will use external libraries such as PubChemPy and RDKit. These tools will first represent the molecular structures as SMILES (Simplified Molecular Input Line Entry System) strings. The SMILES strings will then be converted into Morgan fingerprints, an array format that represents a molecule's structure in binary. This conversion is critical, as the molecular names stored as strings are insufficient for computational processing.
 
 ## Code:
 
