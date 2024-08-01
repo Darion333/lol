@@ -7,7 +7,7 @@
 ### Background
 
 
-Identifying cancerous molecules is crucial for scientific research, especially when these molecules are used in various studies. Polycyclic aromatic hydrocarbons (PAHs) are molecules formed by multiple carbon rings. While some PAH molecules are carcinogenic, others are not, underscoring the necessity of distinguishing between them in research settings.
+Identifying cancerous molecules is crucial for scientific research, especially when these molecules are used in various studies. Polycyclic aromatic hydrocarbons (PAHs) are molecules formed by multiple carbon rings. While some PAH molecules are carcinogenic, others are not, making distinguishing between them necessary in research settings.
 
 Referencing a fundamental principle in chemistry, where molecules of similar structures exhibit similar properties, we can develop a machine learning model to classify PAH molecules. This model will compare the structures of unknown PAHs with those of molecules that have already been classified, predicting their carcinogenic potential.
 
