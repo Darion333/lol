@@ -14,7 +14,7 @@ Referencing a fundamental principle in chemistry, where molecules of similar str
 We will use external libraries such as PubChemPy and RDKit. These tools will first represent the molecular structures as SMILES (Simplified Molecular Input Line Entry System) strings. The SMILES strings will then be converted into Morgan fingerprints, an array format that represents a molecule's structure in binary. This conversion is critical, as the molecular names stored as strings are insufficient for computational processing.
 
 ## Code:
-
+&nbsp;  
 ### Set up
 ```python
 import os    
@@ -43,7 +43,7 @@ from rdkit.Chem import AllChem
 import pubchempy as pcp
 from rdkit import Chem
 ```
-
+&nbsp;  
 ```python
 fs = 10 # font size
 fs_label = 10 # tick label size
@@ -65,9 +65,9 @@ plt.rcParams['mathtext.fontset']='stix'
 ```
 * These code blocks are setting up the basics of what is needed for the model, importing necessary programming libraries and defining parameters for data tables
 
-
+&nbsp;  
 ### Pre-processing the data set
-
+&nbsp;  
 ```python
 datapath = 'PAH/' # path to your data folder
 filein_test= os.path.join(datapath,'testset_0.ds') # read in the CSV file containing the features. This file is just for example
