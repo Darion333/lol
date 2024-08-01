@@ -43,7 +43,7 @@ from rdkit.Chem import AllChem
 import pubchempy as pcp
 from rdkit import Chem
 ```
-&nbsp;  
+
 ```python
 fs = 10 # font size
 fs_label = 10 # tick label size
@@ -77,7 +77,7 @@ df_test = pd.read_csv(filein_test, sep=" ",  header=None, names=['molecule', 'ca
 df_train = pd.read_csv(filein_train, sep=" ",  header=None, names=['molecule', 'cancerous'])
 ```
 * This code block processes the data (different cancerous and uncancerous molecules) listed in a specified data folder
-  
+  &nbsp;  
 ```python
 df_test
 ```
@@ -87,7 +87,7 @@ df_test
 
 * This data is from the test set, in which the code will use as a reference while training the other unknown data
 
-  
+  &nbsp;  
 ```python
 df_train
 ```
@@ -98,7 +98,7 @@ df_train
 * This data is from the train set, in which the code will change and train using the test data as a reference
 
 
-
+&nbsp;  
 ```python
 def getSMILES(df):
     mols=df['molecule'].values
@@ -131,7 +131,7 @@ mydict['atoms']
   ![image](https://github.com/user-attachments/assets/72262dff-79f7-4cf7-9e8b-e34d205a03d0)
 
 
-   
+   &nbsp;  
 ```python
 getSMILES(df_train)
 ```
@@ -139,7 +139,7 @@ getSMILES(df_train)
 
 ![image](https://github.com/user-attachments/assets/aed90f93-e0a1-4612-bd4c-31a5b5a64207)
 
-
+&nbsp;  
 ```python
 df_train
 ```
@@ -147,7 +147,7 @@ df_train
 
 ![image](https://github.com/user-attachments/assets/859fbd5a-4213-4a36-b408-f9e1f9cf1eae)
 
-
+&nbsp;  
 ```python
 getSMILES(df_test)
 ```
@@ -155,7 +155,7 @@ getSMILES(df_test)
 
   ![image](https://github.com/user-attachments/assets/7b1c33da-e344-49c4-87d3-cfe487565905)
 
-
+&nbsp;  
 ```python
 df_test
 ```
@@ -163,7 +163,7 @@ df_test
 
   ![image](https://github.com/user-attachments/assets/af516147-6d01-4799-834e-6c68bc4e25f7)
 
-
+&nbsp;  
 ```python
 fpgen = AllChem.GetMorganGenerator(radius=2)
 mol = Chem.MolFromSmiles("Cn1cnc2c1c(=O)n(C)c(=O)n2C")
@@ -173,7 +173,7 @@ for i in fp:
     print(i)
 ```
 * This code block utilizes AllChem's Morgan Fingerprint generator to take the structural data processed from the SMILES strings, and denote it as an array of integers
-
+&nbsp;  
 
 ```python
 def getData(df):
@@ -204,20 +204,21 @@ print(X_test)
 ![image](https://github.com/user-attachments/assets/bc2ac740-4d0f-493f-9670-3843c31b956d)
 
 
-
+&nbsp;  
 ```python
 X_train,y_train = getData(df_train)
 ```
 
-
+&nbsp;  
 ### Train a SVM and get the ROC curve
+&nbsp;  
 ```python
 from sklearn import svm
 clf = svm.SVC(kernel='rbf')
 clf.fit(X_train, y_train)
 ```
 * This code block imports the SVM module from scikit-learn which is then used to train the SVM classifier using the training data X_train and y_train
-
+&nbsp;  
 ```python
 clf.predict(X_test)
 ```
@@ -225,7 +226,7 @@ clf.predict(X_test)
 
 ![image](https://github.com/user-attachments/assets/db7c4102-c3d6-4811-841f-ea25ab4ec0c9)
 
-
+&nbsp;  
 ```python
 y_test
 ```
@@ -234,7 +235,7 @@ y_test
 ![image](https://github.com/user-attachments/assets/6cb39244-23af-4bee-9981-791c8ae58bc4)
 
 * A comparison between the predicted labels and the actual labels shows that the SVM isnt quite fully accurate
-
+&nbsp;  
 
 ```python
 from sklearn.metrics import RocCurveDisplay
@@ -247,8 +248,9 @@ plt.show()
 
 * The positive rate and false positive rate are plotted along the two different axes, the area under the curve denoting its accuracy
 
-
+&nbsp;  
 ### Train a random forest and get the ROC curve
+&nbsp;  
 ```python
 from sklearn.ensemble import RandomForestClassifier
 rfc = RandomForestClassifier(n_estimators=10, random_state=42)
@@ -260,7 +262,7 @@ plt.show()
 ```
 ![image](https://github.com/user-attachments/assets/6c055a1f-71e2-419e-8ac9-922d0caa1d40)
 
-
+&nbsp;  
 ```python
 from sklearn.linear_model import LogisticRegression
 
@@ -271,7 +273,7 @@ clf.predict(X_test)
 ![image](https://github.com/user-attachments/assets/931d63f2-cb75-4c26-89a1-743e01f01aef)
 
 
-
+&nbsp;  
 ```python
 y_test
 ```
@@ -279,8 +281,9 @@ y_test
 ![image](https://github.com/user-attachments/assets/3a89a637-4c25-4c9e-98fe-565e0b0760d1)
 
 
-
+&nbsp;  
 ### Upsampling
+&nbsp;  
 ```python
 from sklearn.utils import resample,shuffle
 df_0 = df_train[df_train['cancerous'] == -1]
@@ -290,7 +293,7 @@ len(df_0), len(df_1)
 ```
 ![image](https://github.com/user-attachments/assets/177b530f-6adf-467a-a635-9f07d6907c9e)
 
-
+&nbsp;  
 ```python
 df_0_upsampled = resample(df_0,random_state=42,n_samples=50,replace=True)
 
@@ -298,14 +301,14 @@ len(df_0_upsampled)
 ```
 ![image](https://github.com/user-attachments/assets/958a4f8c-61f4-4e2f-bdee-48bc35bf04d6)
 
-
+&nbsp;  
 ```python
 df_0_upsampled
 ```
 ![image](https://github.com/user-attachments/assets/1ff23392-638a-47a1-a0f3-b22b6d5dcf81)
 ![image](https://github.com/user-attachments/assets/2cd41a27-0901-4c77-be3e-98b33127db9d)
 ![image](https://github.com/user-attachments/assets/65bb7e04-330c-4d88-bdb9-e2260ab3fab1)
-
+&nbsp;  
 ```python
 df_upsampled = pd.concat([df_0_upsampled,df_1])
 
@@ -315,8 +318,6 @@ clf_lg = LogisticRegression(random_state=0).fit(X_train_up, y_train_up)
 clf.predict(X_test)
 ```
 ![image](https://github.com/user-attachments/assets/29a39f13-e559-4e19-89d3-352e290deffe)
+&nbsp;  
 
-### Conclusion
-
-Knowing whether or not molecules are cancerous is very important in many different scientific studies and research. Using machine learning and many of its different classification methods, we are able to compare the structures of a known set of molecules (training set) to a set of molecules that we dont know if cancerous or not yet in order to determine whether it is or not.
 
