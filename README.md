@@ -9,7 +9,7 @@
 
 Identifying cancerous molecules is crucial for scientific research, especially when these molecules are used in various studies. Polycyclic aromatic hydrocarbons (PAHs) are molecules formed by multiple carbon rings. While some PAH molecules are carcinogenic, others are not, underscoring the necessity of distinguishing between them in research settings.
 
-Leveraging a fundamental principle in chemistry—where molecules of similar structures exhibit similar properties—we can develop a machine learning model to classify PAH molecules. This model will compare the structures of unknown PAHs with those of molecules that have already been classified, predicting their carcinogenic potential.
+Referencing a fundamental principle in chemistry, where molecules of similar structures exhibit similar properties, we can develop a machine learning model to classify PAH molecules. This model will compare the structures of unknown PAHs with those of molecules that have already been classified, predicting their carcinogenic potential.
 
 We will use external libraries such as PubChemPy and RDKit. These tools will first represent the molecular structures as SMILES (Simplified Molecular Input Line Entry System) strings. The SMILES strings will then be converted into Morgan fingerprints, an array format that represents a molecule's structure in binary. This conversion is critical, as the molecular names stored as strings are insufficient for computational processing.
 
